@@ -9,7 +9,7 @@ public partial class Cerveza
 
     public string Nombre { get; set; } = null!;
 
-    public double? IBU { get; set; }
+    public double? Ibu { get; set; }
 
     public double? Alcohol { get; set; }
 
@@ -23,7 +23,7 @@ public partial class Cerveza
 
     public int Contenido { get; set; }
 
-    public string? imagen { get; set; }
+    public string? Imagen { get; set; }
 
     public int? IdArchivo { get; set; }
 

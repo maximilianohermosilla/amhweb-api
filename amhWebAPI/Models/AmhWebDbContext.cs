@@ -91,7 +91,7 @@ public partial class AmhWebDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Observaciones).IsUnicode(false);
-            entity.Property(e => e.imagen).IsUnicode(false);
+            entity.Property(e => e.Imagen).IsUnicode(false);
 
             entity.HasOne(d => d.IdArchivoNavigation).WithMany(p => p.Cerveza)
                 .HasForeignKey(d => d.IdArchivo)
