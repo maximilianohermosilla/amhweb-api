@@ -18,5 +18,7 @@
 
         public string? Perfil { get; set; }
 
+        public List<SistemaDTO>? Sistemas { get; set; }
+
     }
 }

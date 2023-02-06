@@ -1,10 +1,13 @@
-using amhWebAPI.DTO;
-using amhWebAPI.Models;
+global using Microsoft.EntityFrameworkCore;
+global using amhWebAPI;
+global using amhWebAPI.DTO;
+global using amhWebAPI.Models;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
 using System.Text;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,12 @@ builder.Services.AddAutoMapper(config =>
 
     config.CreateMap<Usuario, UsuarioDTO>();
     config.CreateMap<UsuarioDTO, Usuario>();
+
+    config.CreateMap<Sistema, SistemaDTO>();
+    config.CreateMap<SistemaDTO, Sistema>();
+
+    config.CreateMap<UsuarioSistema, UsuarioSistemaDTO>();
+    config.CreateMap<UsuarioSistemaDTO, UsuarioSistema>();
 
     config.CreateMap<Expediente, ExpedienteDTO>();
     config.CreateMap<ExpedienteDTO, Expediente>();
@@ -70,8 +79,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddDbContext<AmhWebDbContext>(x => x.UseSqlServer("Data Source=SQL5097.site4now.net;Initial Catalog=db_a934ba_mayibeercollection;User Id=db_a934ba_mayibeercollection_admin;Password=Caslacapo1908**"));
-builder.Services.AddDbContext<AmhWebDbContext>(x => x.UseSqlServer("Server=localhost; Database=AmhWebDatabase; Trusted_Connection=True; TrustServerCertificate=True"));
+builder.Services.AddDbContext<AmhWebDbContext>(x => x.UseSqlServer("Data Source=SQL5097.site4now.net;Initial Catalog=db_a934ba_mayibeercollection;User Id=db_a934ba_mayibeercollection_admin;Password=Caslacapo1908**"));
+//builder.Services.AddDbContext<AmhWebDbContext>(x => x.UseSqlServer("Server=localhost; Database=AmhWebDatabase; Trusted_Connection=True; TrustServerCertificate=True"));
 
 //SERILOG
 builder.Host.UseSerilog();
