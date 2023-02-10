@@ -45,8 +45,9 @@ namespace amhWebAPI.Controllers
             {
                 var keyBytes = Encoding.ASCII.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
-                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Login));
+                claims.AddClaim(new Claim(ClaimTypes.Name, request.Login));
                 claims.AddClaim(new Claim(ClaimTypes.Role, userDTO.Perfil));
+                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier , userDTO.Id.ToString()));
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
