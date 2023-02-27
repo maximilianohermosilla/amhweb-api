@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.MayiBeerCollection
 {
-    [Route("[controller]")]    
+    [Route("[controller]")]
     [ApiController]
     public class CervezaController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace amhWebAPI.Controllers
         {
             try
             {
-                List<Cerveza> lst = (from tbl in _contexto.Cerveza where tbl.Id > 0 select tbl).ToList();          
+                List<Cerveza> lst = (from tbl in _contexto.Cerveza where tbl.Id > 0 select tbl).ToList();
 
                 List<CervezaDTO> cervezasDTO = _mapper.Map<List<CervezaDTO>>(lst);
 
@@ -76,7 +76,7 @@ namespace amhWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);                
+                return BadRequest(ex.Message);
             }
 
         }
@@ -128,7 +128,7 @@ namespace amhWebAPI.Controllers
             try
             {
                 var lista = (from dt in _contexto.Cerveza
-                             join d in _contexto.Marca on dt.IdMarca equals d.Id                             
+                             join d in _contexto.Marca on dt.IdMarca equals d.Id
                              select d).GroupBy(p => p.Nombre)
                    .Select(g => new { name = g.Key, value = g.Count() });
 
@@ -211,24 +211,24 @@ namespace amhWebAPI.Controllers
                 List<ReporteDTO> lista = new List<ReporteDTO>();
                 var listaTotal = (from tbl in _contexto.Cerveza where tbl.Id > 0 select tbl.Id).ToList();
                 var listaMarcas = (from d in _contexto.Cerveza
-                             select d).GroupBy(p => p.IdMarca)
+                                   select d).GroupBy(p => p.IdMarca)
                    .Select(g => new { name = g.Key, value = g.Count() });
                 var listaEstilos = (from d in _contexto.Cerveza
-                                   select d).GroupBy(p => p.IdEstilo)
+                                    select d).GroupBy(p => p.IdEstilo)
                                 .Select(g => new { name = g.Key, value = g.Count() });
                 var listaCiudades = (from d in _contexto.Cerveza
-                                   select d).GroupBy(p => p.IdCiudad)
+                                     select d).GroupBy(p => p.IdCiudad)
                 .Select(g => new { name = g.Key, value = g.Count() });
                 var listaPaises = (from dt in _contexto.Cerveza
                                    join d in _contexto.Ciudad on dt.IdCiudad equals d.Id
                                    select d).GroupBy(p => p.IdPais)
                 .Select(g => new { name = g.Key, value = g.Count() });
 
-                lista.Add(new ReporteDTO() { name= "Cervezas", value = listaTotal.Count() });
-                lista.Add(new ReporteDTO() { name= "Marcas", value= listaMarcas.Count() });
-                lista.Add(new ReporteDTO() { name= "Estilos", value= listaEstilos.Count() });
-                lista.Add(new ReporteDTO() { name= "Paises", value= listaPaises.Count() });
-                lista.Add(new ReporteDTO() { name= "Ciudades", value= listaCiudades.Count() });
+                lista.Add(new ReporteDTO() { name = "Cervezas", value = listaTotal.Count() });
+                lista.Add(new ReporteDTO() { name = "Marcas", value = listaMarcas.Count() });
+                lista.Add(new ReporteDTO() { name = "Estilos", value = listaEstilos.Count() });
+                lista.Add(new ReporteDTO() { name = "Paises", value = listaPaises.Count() });
+                lista.Add(new ReporteDTO() { name = "Ciudades", value = listaCiudades.Count() });
 
                 return Accepted(lista);
             }
@@ -296,13 +296,14 @@ namespace amhWebAPI.Controllers
         {
             try
             {
-                List<Cerveza> lst = (from tbl in _contexto.Cerveza where
+                List<Cerveza> lst = (from tbl in _contexto.Cerveza
+                                     where
                               (tbl.IdMarca == busqueda.IdMarca || busqueda.IdMarca == 0) &&
                               (tbl.IdEstilo == busqueda.IdEstilo || busqueda.IdEstilo == 0) &&
-                              (tbl.IdCiudad == busqueda.IdCiudad || (busqueda.IdCiudad == 0 && busqueda.IdPais == 0) || 
-                              (busqueda.IdCiudad == 0 && busqueda.IdPais > 0 && (from tblCiudad in _contexto.Ciudad where tblCiudad.IdPais == busqueda.IdPais select tblCiudad.Id).Contains((int)tbl.IdCiudad))
-                              ) 
-                select tbl).ToList();
+                              (tbl.IdCiudad == busqueda.IdCiudad || busqueda.IdCiudad == 0 && busqueda.IdPais == 0 ||
+                              busqueda.IdCiudad == 0 && busqueda.IdPais > 0 && (from tblCiudad in _contexto.Ciudad where tblCiudad.IdPais == busqueda.IdPais select tblCiudad.Id).Contains((int)tbl.IdCiudad)
+                              )
+                                     select tbl).ToList();
 
                 if (lst == null)
                 {
@@ -363,7 +364,7 @@ namespace amhWebAPI.Controllers
                     Archivo newArch = new Archivo() { Archivo1 = bytes };
                     _contexto.Archivo.Add(newArch);
                     _contexto.SaveChanges();
-                    _cerveza.Imagen = "";
+                    _cerveza.imagen = "";
                     _cerveza.IdArchivo = newArch.Id;
                 }
 
@@ -379,7 +380,7 @@ namespace amhWebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("Ocurrió un error al insertar la cerveza: " + nuevo.Nombre + ". Detalle: " + ex.Message);
-                return BadRequest("Hubo un problema al guardar la cerveza: " +  ex.Message);
+                return BadRequest("Hubo un problema al guardar la cerveza: " + ex.Message);
             }
         }
 
@@ -409,7 +410,7 @@ namespace amhWebAPI.Controllers
                     byte[] bytes = Encoding.ASCII.GetBytes(actualiza.Imagen);
                     Archivo arch = (from a in _contexto.Archivo where a.Id == _cerveza.IdArchivo select a).FirstOrDefault();
 
-                    if(arch == null)
+                    if (arch == null)
                     {
                         Archivo newArch = new Archivo() { Archivo1 = bytes };
                         _contexto.Archivo.Add(newArch);
@@ -424,15 +425,15 @@ namespace amhWebAPI.Controllers
                     }
                 }
                 oldName = _cerveza.Nombre;
-                oldMarca = _cerveza.IdMarca > 0? _cerveza.IdMarca.ToString(): "";
+                oldMarca = _cerveza.IdMarca > 0 ? _cerveza.IdMarca.ToString() : "";
                 oldEstilo = _cerveza.IdEstilo > 0 ? _cerveza.IdEstilo.ToString() : "";
                 oldCiudad = _cerveza.IdCiudad > 0 ? _cerveza.IdCiudad.ToString() : "";
-                oldIbu = _cerveza.Ibu > 0 ? _cerveza.Ibu.ToString() : ""    ;
-                oldAlcohol = _cerveza.Alcohol > 0 ? _cerveza.Alcohol.ToString() : ""    ;
-                oldContenido = _cerveza.Contenido > 0 ? _cerveza.Contenido.ToString() : ""  ;
+                oldIbu = _cerveza.IBU > 0 ? _cerveza.IBU.ToString() : "";
+                oldAlcohol = _cerveza.Alcohol > 0 ? _cerveza.Alcohol.ToString() : "";
+                oldContenido = _cerveza.Contenido > 0 ? _cerveza.Contenido.ToString() : "";
                 oldObservaciones = _cerveza.Observaciones;
                 _cerveza.Nombre = actualiza.Nombre;
-                _cerveza.Ibu = actualiza.Ibu;
+                _cerveza.IBU = actualiza.Ibu;
                 _cerveza.Alcohol = actualiza.Alcohol;
                 _cerveza.Contenido = actualiza.Contenido;
                 _cerveza.Observaciones = actualiza.Observaciones;

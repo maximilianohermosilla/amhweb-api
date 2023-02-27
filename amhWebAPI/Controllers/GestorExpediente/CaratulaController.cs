@@ -7,13 +7,13 @@ using System.Text.RegularExpressions;
 using System.Text;
 using amhWebAPI.Models;
 
-namespace MayiBeerCollection.Controllers
+namespace amhWebAPI.Controllers.GestorExpediente
 {
     [Route("[controller]")]
     [ApiController]
     public class CaratulaController : ControllerBase
     {
-       private AmhWebDbContext _contexto;
+        private AmhWebDbContext _contexto;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ILogger<CaratulaController> _logger;
@@ -29,7 +29,7 @@ namespace MayiBeerCollection.Controllers
         [HttpGet("listar/")]
         public ActionResult<IEnumerable<Caratula>> Caratulas()
         {
-            var lst = (from tbl in _contexto.Caratula where tbl.Id > 0 select new Caratula() { Id = tbl.Id, Nombre = tbl.Nombre }).ToList();     
+            var lst = (from tbl in _contexto.Caratula where tbl.Id > 0 select new Caratula() { Id = tbl.Id, Nombre = tbl.Nombre }).ToList();
 
             return Accepted(lst);
         }
@@ -53,7 +53,7 @@ namespace MayiBeerCollection.Controllers
         public ActionResult nuevo(Caratula nuevo)
         {
             try
-            {       
+            {
                 _contexto.Caratula.Add(nuevo);
                 _contexto.SaveChanges();
 
@@ -86,7 +86,7 @@ namespace MayiBeerCollection.Controllers
                     return NotFound(actualiza);
                 }
                 oldName = item.Nombre;
-                item.Nombre = actualiza.Nombre;                
+                item.Nombre = actualiza.Nombre;
 
                 _contexto.Caratula.Update(item);
                 _contexto.SaveChanges();

@@ -11,6 +11,7 @@ using amhWebAPI.Models;
 using amhWebAPI.DTO;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using amhWebAPI.Controllers.GestorExpediente;
 
 namespace amhWebAPI.Controllers
 {

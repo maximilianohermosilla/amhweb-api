@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.GestorExpediente
 {
     [Route("[controller]")]
     [ApiController]
     public class ActoController : ControllerBase
     {
-       private AmhWebDbContext _contexto;
+        private AmhWebDbContext _contexto;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ILogger<ActoController> _logger;

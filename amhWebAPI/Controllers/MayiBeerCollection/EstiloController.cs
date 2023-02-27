@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 
 #nullable disable
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.MayiBeerCollection
 {
     [Route("[controller]")]
     [ApiController]
@@ -94,7 +94,7 @@ namespace amhWebAPI.Controllers
                     byte[] bytes = Encoding.ASCII.GetBytes(nuevo.Imagen);
                     Archivo newArch = new Archivo() { Archivo1 = bytes };
                     _contexto.Archivo.Add(newArch);
-                    _contexto.SaveChanges();                    
+                    _contexto.SaveChanges();
                     _estilo.IdArchivo = newArch.Id;
                 }
 
@@ -111,7 +111,7 @@ namespace amhWebAPI.Controllers
             {
                 _logger.LogError("Ocurrió un error al insertar el estilo: " + nuevo.Nombre + ". Detalle: " + ex.Message);
                 return BadRequest(ex.Message);
-            }            
+            }
         }
 
         [HttpPut("actualizar")]
@@ -148,7 +148,7 @@ namespace amhWebAPI.Controllers
                         _contexto.Archivo.Update(arch);
                         _contexto.SaveChanges();
                     }
-                }  
+                }
 
                 _contexto.Estilo.Update(_estilo);
                 _contexto.SaveChanges();

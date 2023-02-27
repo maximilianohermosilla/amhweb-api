@@ -21,11 +21,17 @@ public partial class AmhWebDbContext : DbContext
 
     public virtual DbSet<ArchivoFilestream> ArchivoFilestream { get; set; }
 
+    public virtual DbSet<Banco> Banco { get; set; }
+
     public virtual DbSet<Caratula> Caratula { get; set; }
 
     public virtual DbSet<Cerveza> Cerveza { get; set; }
 
     public virtual DbSet<Ciudad> Ciudad { get; set; }
+
+    public virtual DbSet<Cuenta> Cuenta { get; set; }
+
+    public virtual DbSet<Empresa> Empresa { get; set; }
 
     public virtual DbSet<Estilo> Estilo { get; set; }
 
@@ -39,9 +45,21 @@ public partial class AmhWebDbContext : DbContext
 
     public virtual DbSet<Perfil> Perfil { get; set; }
 
+    public virtual DbSet<Registro> Registro { get; set; }
+
+    public virtual DbSet<RegistroVinculado> RegistroVinculado { get; set; }
+
     public virtual DbSet<Sistema> Sistema { get; set; }
 
     public virtual DbSet<SituacionRevista> SituacionRevista { get; set; }
+
+    public virtual DbSet<Suscripcion> Suscripcion { get; set; }
+
+    public virtual DbSet<Tarjeta> Tarjeta { get; set; }
+
+    public virtual DbSet<TipoCuenta> TipoCuenta { get; set; }
+
+    public virtual DbSet<TipoTarjeta> TipoTarjeta { get; set; }
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
@@ -49,9 +67,7 @@ public partial class AmhWebDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        //=> optionsBuilder.UseSqlServer("Server=localhost; Database=AmhWebDatabase; Trusted_Connection=True; TrustServerCertificate=True");
-        => optionsBuilder.UseSqlServer("Data Source=SQL5097.site4now.net;Initial Catalog=db_a934ba_mayibeercollection;User Id=db_a934ba_mayibeercollection_admin;Password=Caslacapo1908**");
-        
+        => optionsBuilder.UseSqlServer("Server=localhost; Database=AmhWebDatabase; Trusted_Connection=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -80,6 +96,13 @@ public partial class AmhWebDbContext : DbContext
             entity.Property(e => e.RootDirectory).IsUnicode(false);
         });
 
+        modelBuilder.Entity<Banco>(entity =>
+        {
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Caratula>(entity =>
         {
             entity.Property(e => e.Nombre)
@@ -93,7 +116,7 @@ public partial class AmhWebDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Observaciones).IsUnicode(false);
-            entity.Property(e => e.Imagen).IsUnicode(false);
+            entity.Property(e => e.imagen).IsUnicode(false);
 
             entity.HasOne(d => d.IdArchivoNavigation).WithMany(p => p.Cerveza)
                 .HasForeignKey(d => d.IdArchivo)
@@ -123,6 +146,35 @@ public partial class AmhWebDbContext : DbContext
                 .HasForeignKey(d => d.IdPais)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Ciudad_Pais");
+        });
+
+        modelBuilder.Entity<Cuenta>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Cuenta)
+                .HasForeignKey<Cuenta>(d => d.Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cuenta_Usuario");
+
+            entity.HasOne(d => d.IdTarjetaNavigation).WithMany(p => p.Cuenta)
+                .HasForeignKey(d => d.IdTarjeta)
+                .HasConstraintName("FK_Cuenta_Tarjeta");
+
+            entity.HasOne(d => d.IdTipoCuentaNavigation).WithMany(p => p.Cuenta)
+                .HasForeignKey(d => d.IdTipoCuenta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cuenta_TipoCuenta");
+        });
+
+        modelBuilder.Entity<Empresa>(entity =>
+        {
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Estilo>(entity =>
@@ -199,6 +251,47 @@ public partial class AmhWebDbContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Registro>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Fecha).HasColumnType("date");
+            entity.Property(e => e.Observaciones).IsUnicode(false);
+            entity.Property(e => e.Valor).HasColumnType("numeric(25, 2)");
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Registro)
+                .HasForeignKey<Registro>(d => d.Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Registro_Empresa");
+
+            entity.HasOne(d => d.IdCuentaNavigation).WithMany(p => p.Registro)
+                .HasForeignKey(d => d.IdCuenta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Registro_Cuenta");
+
+            entity.HasOne(d => d.IdRegistroVinculadoNavigation).WithMany(p => p.Registro)
+                .HasForeignKey(d => d.IdRegistroVinculado)
+                .HasConstraintName("FK_Registro_RegistroVinculado");
+
+            entity.HasOne(d => d.IdSuscripcionNavigation).WithMany(p => p.Registro)
+                .HasForeignKey(d => d.IdSuscripcion)
+                .HasConstraintName("FK_Registro_Suscripcion");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Registro)
+                .HasForeignKey(d => d.IdUsuario)
+                .HasConstraintName("FK_Registro_Usuario");
+        });
+
+        modelBuilder.Entity<RegistroVinculado>(entity =>
+        {
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ValorFinal).HasColumnType("numeric(25, 2)");
+        });
+
         modelBuilder.Entity<Sistema>(entity =>
         {
             entity.Property(e => e.Descripcion)
@@ -210,6 +303,56 @@ public partial class AmhWebDbContext : DbContext
         {
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Suscripcion>(entity =>
+        {
+            entity.Property(e => e.FechaDesde).HasColumnType("date");
+            entity.Property(e => e.FechaHasta).HasColumnType("date");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ValorActual).HasColumnType("numeric(25, 2)");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Suscripcion)
+                .HasForeignKey(d => d.IdUsuario)
+                .HasConstraintName("FK_Suscripcion_Usuario");
+        });
+
+        modelBuilder.Entity<Tarjeta>(entity =>
+        {
+            entity.Property(e => e.Numero)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Vencimiento)
+                .HasMaxLength(5)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdBancoNavigation).WithMany(p => p.Tarjeta)
+                .HasForeignKey(d => d.IdBanco)
+                .HasConstraintName("FK_Tarjeta_Banco");
+
+            entity.HasOne(d => d.IdTipoTarjetaNavigation).WithMany(p => p.Tarjeta)
+                .HasForeignKey(d => d.IdTipoTarjeta)
+                .HasConstraintName("FK_Tarjeta_TipoTarjeta");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Tarjeta)
+                .HasForeignKey(d => d.IdUsuario)
+                .HasConstraintName("FK_Tarjeta_Usuario");
+        });
+
+        modelBuilder.Entity<TipoCuenta>(entity =>
+        {
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TipoTarjeta>(entity =>
+        {
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 

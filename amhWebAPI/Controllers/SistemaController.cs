@@ -1,4 +1,5 @@
-﻿using amhWebAPI.Models;
+﻿using amhWebAPI.Controllers.GestorExpediente;
+using amhWebAPI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -8,7 +8,7 @@
         public double? Alcohol { get; set; }
         public int IdMarca { get; set; }
         public string? NombreMarca { get; set; }
-        public int IdEstilo { get; set; }
+        public int? IdEstilo { get; set; }
         public string? NombreEstilo { get; set; }
         public int? IdCiudad { get; set; }
         public string? NombreCiudad { get; set; }

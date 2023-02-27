@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.GestorExpediente
 {
     [Route("[controller]")]
     [ApiController]

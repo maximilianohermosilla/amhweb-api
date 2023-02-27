@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.GestorExpediente
 {
     [Route("[controller]")]
     [ApiController]

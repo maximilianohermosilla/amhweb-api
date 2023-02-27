@@ -12,7 +12,7 @@ using System.Data;
 using System.Security.Claims;
 
 #nullable disable
-namespace amhWebAPI.Controllers
+namespace amhWebAPI.Controllers.MayiBeerCollection
 {
     [Route("[controller]")]
     [ApiController]
@@ -117,7 +117,7 @@ namespace amhWebAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            
+
         }
 
         [HttpPut("actualizar")]
@@ -180,7 +180,7 @@ namespace amhWebAPI.Controllers
 
             List<Cerveza> _cervezas = (from tbl in _contexto.Cerveza where tbl.IdMarca == MarcaId select tbl).ToList();
             if (_cervezas.Count() > 0)
-            {                
+            {
                 return BadRequest("No se puede eliminar la marca porque tiene una o más cervezas asociadas");
             }
 
