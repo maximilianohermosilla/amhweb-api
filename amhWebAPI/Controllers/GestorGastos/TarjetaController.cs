@@ -52,7 +52,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 }
             }
 
-            return Accepted(lst);
+            return Ok(tarjetasDTO);
         }
 
 
@@ -85,7 +85,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de tarjeta Id: " + Id + ". Resultados: " + item.Numero);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -101,7 +101,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó una nueva tarjeta: " + nuevo.Id + ". Nombre: " + nuevo.Numero);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -136,7 +136,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.Tarjeta.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la tarjeta: " + actualiza.Id + ". Numero anterior: " + oldName + ". Numero actual: " + actualiza.Numero);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -166,7 +166,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.Tarjeta.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la tarjeta: " + Id + ", " + item.Numero);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

@@ -29,7 +29,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
         {
             var lst = (from tbl in _contexto.Acto where tbl.Id > 0 select new Acto() { Id = tbl.Id, Nombre = tbl.Nombre }).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -43,7 +43,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
             }
 
             //_logger.LogWarning("Búsqueda de acto Id: " + _id + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -58,7 +58,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 nuevo.Id = nuevo.Id;
 
                 //_logger.LogWarning("Se insertó un nuevo acto: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -89,7 +89,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 _contexto.Acto.Update(item);
                 _contexto.SaveChanges();
                 //_logger.LogWarning("Se actualizó el acto: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
             _contexto.Acto.Remove(item);
             _contexto.SaveChanges();
             //_logger.LogWarning("Se eliminó el acto: " + IdActo + ", " + item.Nombre);
-            return Accepted(IdActo);
+            return Ok(IdActo);
         }
 
     }

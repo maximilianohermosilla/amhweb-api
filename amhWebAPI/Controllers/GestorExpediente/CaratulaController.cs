@@ -31,7 +31,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
         {
             var lst = (from tbl in _contexto.Caratula where tbl.Id > 0 select new Caratula() { Id = tbl.Id, Nombre = tbl.Nombre }).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -45,7 +45,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
             }
 
             //_logger.LogWarning("Búsqueda de caratula Id: " + _id + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -60,7 +60,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 nuevo.Id = nuevo.Id;
 
                 //_logger.LogWarning("Se insertó una nueva caratula: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 _contexto.Caratula.Update(item);
                 _contexto.SaveChanges();
                 //_logger.LogWarning("Se actualizó la caratula: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -121,7 +121,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
             _contexto.Caratula.Remove(item);
             _contexto.SaveChanges();
             //_logger.LogWarning("Se eliminó la caratula: " + IdCaratula + ", " + item.Nombre);
-            return Accepted(IdCaratula);
+            return Ok(IdCaratula);
         }
 
     }

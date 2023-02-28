@@ -55,7 +55,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 }
             }
 
-            return Accepted(expedientesDTO);
+            return Ok(expedientesDTO);
         }
 
         [HttpGet("listarPendientes/")]
@@ -86,7 +86,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 }
             }
 
-            return Accepted(expedientesDTO);
+            return Ok(expedientesDTO);
         }
 
 
@@ -122,7 +122,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 }
 
                 //_logger.LogWarning("Búsqueda de Expediente Id: " + _id + ". Resultados: " + item.Nombre);
-                return Accepted(expedienteDTO);
+                return Ok(expedienteDTO);
             }
             catch (Exception ex)
             {
@@ -164,7 +164,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 nuevo.Id = nuevo.Id;
 
                 //_logger.LogWarning("Se insertó un nuevo Expediente: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -207,7 +207,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
                 _contexto.Expediente.Update(item);
                 _contexto.SaveChanges();
                 //_logger.LogWarning("Se actualizó el Expediente: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace amhWebAPI.Controllers.GestorExpediente
             _contexto.Expediente.Remove(item);
             _contexto.SaveChanges();
             //_logger.LogWarning("Se eliminó el Expediente: " + IdActo + ", " + item.Nombre);
-            return Accepted(IdExpediente);
+            return Ok(IdExpediente);
         }
     }
 }

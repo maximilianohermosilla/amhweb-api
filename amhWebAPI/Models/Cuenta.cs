@@ -15,11 +15,11 @@ public partial class Cuenta
 
     public int IdUsuario { get; set; }
 
-    public virtual Usuario IdNavigation { get; set; } = null!;
-
     public virtual Tarjeta? IdTarjetaNavigation { get; set; }
 
     public virtual TipoCuenta IdTipoCuentaNavigation { get; set; } = null!;
+
+    public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
 
     public virtual ICollection<Registro> Registro { get; } = new List<Registro>();
 }

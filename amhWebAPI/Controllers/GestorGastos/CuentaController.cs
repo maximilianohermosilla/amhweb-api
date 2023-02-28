@@ -49,8 +49,8 @@ namespace amhWebAPI.Controllers.GestorGastos
                     item.UsuarioNombre = usuario.Nombre;
                 }
             }
-
-            return Accepted(lst);
+            
+            return Ok(cuentasDTO);
         }
 
 
@@ -83,7 +83,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de cuenta Id: " + Id + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -99,7 +99,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó una nueva cuenta: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -133,7 +133,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.Cuenta.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la cuenta: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.Cuenta.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la cuenta: " + Id + ", " + item.Nombre);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

@@ -28,7 +28,7 @@ namespace amhWebAPI.Controllers.GestorGastos
         {
             var lst = (from tbl in _contexto.RegistroVinculado where tbl.Id > 0 select tbl).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -42,7 +42,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de Registro Vinculado Id: " + Id + ". Resultados: " + item.Descripcion);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -57,7 +57,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó un nuevo Registro Vinculado: " + nuevo.Id + ". Nombre: " + nuevo.Descripcion);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.RegistroVinculado.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó el Registro Vinculado: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Descripcion);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.RegistroVinculado.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el Registro Vinculado: " + Id + ", " + item.Descripcion);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

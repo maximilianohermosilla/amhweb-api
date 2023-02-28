@@ -125,7 +125,7 @@ namespace amhWebAPI.Controllers
                 }
             }
 
-            return Accepted(_usersDTO);
+            return Ok(_usersDTO);
         }
 
         [HttpGet("buscar/{IdUsuario}")]
@@ -161,7 +161,7 @@ namespace amhWebAPI.Controllers
 
 
             _logger.LogWarning("Búsqueda de usuario Id: " + IdUsuario + ". Resultados: " + usuarioDTO.Nombre);
-            return Accepted(usuarioDTO);
+            return Ok(usuarioDTO);
         }
 
         [HttpPut("actualizar")]
@@ -200,7 +200,7 @@ namespace amhWebAPI.Controllers
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó el usuario: " + actualiza.Id + ". Datos anteriores: Nombre=" + oldName + ", Usuario=" + oldLogin + ", Contraseña=" + oldPassword
                + ", Correo=" + oldCorreo + ", Habilitado=" + oldHabilitado + " ,IdPerfil=" + oldIdPerfil);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace amhWebAPI.Controllers
             _contexto.Usuario.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el Usuario: " + IdUsuario+ ", " + item.Nombre);
-            return Accepted(IdUsuario);
+            return Ok(IdUsuario);
         }
 
     }

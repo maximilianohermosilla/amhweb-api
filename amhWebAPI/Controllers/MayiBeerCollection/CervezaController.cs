@@ -72,7 +72,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                         item.NombreCiudad = _ciudad.Nombre + " (" + _pais.Nombre + ")";
                     }
                 }
-                return Accepted(cervezasDTO);
+                return Ok(cervezasDTO);
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                         item.NombreCiudad = _ciudad.Nombre + " (" + _pais.Nombre + ")";
                     }
                 }
-                return Accepted(cervezasDTO);
+                return Ok(cervezasDTO);
             }
             catch (Exception ex)
             {
@@ -133,7 +133,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                    .Select(g => new { name = g.Key, value = g.Count() });
 
 
-                return Accepted(lista);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -153,7 +153,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                    .Select(g => new { name = g.Key, value = g.Count() });
 
 
-                return Accepted(lista);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -173,7 +173,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                    .Select(g => new { name = g.Key, value = g.Count() });
 
 
-                return Accepted(lista);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                    .Select(g => new { name = g.Key, value = g.Count() });
 
 
-                return Accepted(lista);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 lista.Add(new ReporteDTO() { name = "Paises", value = listaPaises.Count() });
                 lista.Add(new ReporteDTO() { name = "Ciudades", value = listaCiudades.Count() });
 
-                return Accepted(lista);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -283,7 +283,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 }
 
                 _logger.LogWarning("Búsqueda de Cerveza Id: " + CervezaId + ". Resultados: " + item.Nombre);
-                return Accepted(item);
+                return Ok(item);
             }
             catch (Exception ex)
             {
@@ -342,7 +342,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                         item.NombreCiudad = _ciudad.Nombre + " (" + _pais.Nombre + ")";
                     }
                 }
-                return Accepted(cervezasDTO);
+                return Ok(cervezasDTO);
             }
             catch (Exception ex)
             {
@@ -375,7 +375,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
 
                 _logger.LogWarning("Se insertó una nueva cerveza: " + nuevo.Id + ". Detalle: " + nuevo.Nombre + ", " + nuevo.NombreMarca + ", " + nuevo.NombreEstilo
                      + ", " + nuevo.NombrePais + ", " + nuevo.NombreCiudad + ", Ibu=" + nuevo.Ibu + ", Alcohol=" + nuevo.Alcohol + "%, Contenido=" + nuevo.Contenido + ", " + nuevo.Observaciones);
-                return Accepted(nuevo);
+                return Ok(nuevo);
             }
             catch (Exception ex)
             {
@@ -445,7 +445,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la cerveza: " + actualiza.Id + ". Datos anteriores: " + oldName + ", IdMarca=" + oldMarca + ", IdEstilo=" + oldEstilo
                 + ", IdCiudad=" + oldCiudad + ", Ibu=" + oldIbu + " ,Alcohol=" + oldIbu + "%, Contenido=" + oldContenido + "ml/cc, Observaciones=" + oldObservaciones);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -477,7 +477,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 _contexto.Cerveza.Remove(_cerveza);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se eliminó la cerveza: " + CervezaId + ", " + _cerveza.Nombre);
-                return Accepted(CervezaId);
+                return Ok(CervezaId);
             }
             catch (Exception ex)
             {

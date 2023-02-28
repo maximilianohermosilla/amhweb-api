@@ -29,11 +29,14 @@ builder.Services.AddAutoMapper(config =>
     config.CreateMap<Pais, PaisDTO>();
     config.CreateMap<PaisDTO, Pais>();
 
+    config.CreateMap<Sistema, SistemaDTO>();
+    config.CreateMap<SistemaDTO, Sistema>();
+
     config.CreateMap<Usuario, UsuarioDTO>();
     config.CreateMap<UsuarioDTO, Usuario>();
 
-    config.CreateMap<Sistema, SistemaDTO>();
-    config.CreateMap<SistemaDTO, Sistema>();
+    config.CreateMap<Usuario, UsuarioLoginDTO>();
+    config.CreateMap<UsuarioLoginDTO, Usuario>();
 
     config.CreateMap<UsuarioSistema, UsuarioSistemaDTO>();
     config.CreateMap<UsuarioSistemaDTO, UsuarioSistema>();
@@ -41,6 +44,15 @@ builder.Services.AddAutoMapper(config =>
     config.CreateMap<Expediente, ExpedienteDTO>();
     config.CreateMap<ExpedienteDTO, Expediente>();
 
+    //GESTOR GASTOS
+    config.CreateMap<Tarjeta, TarjetaDTO>();
+    config.CreateMap<TarjetaDTO, Tarjeta>();
+
+    config.CreateMap<Cuenta, CuentaDTO>();
+    config.CreateMap<CuentaDTO, Cuenta>();
+
+    config.CreateMap<Registro, RegistroDTO>();
+    config.CreateMap<RegistroDTO, Registro>();
 
 }, typeof(Program));
 

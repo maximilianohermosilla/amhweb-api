@@ -28,7 +28,7 @@ namespace amhWebAPI.Controllers.GestorGastos
         {
             var lst = (from tbl in _contexto.Suscripcion where tbl.Id > 0 select tbl).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -42,7 +42,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de suscripcion Id: " + Id + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -57,7 +57,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó una nueva suscripcion: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.Suscripcion.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la suscripcion: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -122,7 +122,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.Suscripcion.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la suscripcion: " + Id + ", " + item.Nombre);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

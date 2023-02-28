@@ -150,15 +150,9 @@ public partial class AmhWebDbContext : DbContext
 
         modelBuilder.Entity<Cuenta>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Cuenta)
-                .HasForeignKey<Cuenta>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Cuenta_Usuario");
 
             entity.HasOne(d => d.IdTarjetaNavigation).WithMany(p => p.Cuenta)
                 .HasForeignKey(d => d.IdTarjeta)
@@ -168,6 +162,11 @@ public partial class AmhWebDbContext : DbContext
                 .HasForeignKey(d => d.IdTipoCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cuenta_TipoCuenta");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Cuenta)
+                .HasForeignKey(d => d.IdUsuario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cuenta_Usuario");
         });
 
         modelBuilder.Entity<Empresa>(entity =>
@@ -253,7 +252,6 @@ public partial class AmhWebDbContext : DbContext
 
         modelBuilder.Entity<Registro>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -261,15 +259,14 @@ public partial class AmhWebDbContext : DbContext
             entity.Property(e => e.Observaciones).IsUnicode(false);
             entity.Property(e => e.Valor).HasColumnType("numeric(25, 2)");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Registro)
-                .HasForeignKey<Registro>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Registro_Empresa");
-
             entity.HasOne(d => d.IdCuentaNavigation).WithMany(p => p.Registro)
                 .HasForeignKey(d => d.IdCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Registro_Cuenta");
+
+            entity.HasOne(d => d.IdEmpresaNavigation).WithMany(p => p.Registro)
+                .HasForeignKey(d => d.IdEmpresa)
+                .HasConstraintName("FK_Registro_Empresa");
 
             entity.HasOne(d => d.IdRegistroVinculadoNavigation).WithMany(p => p.Registro)
                 .HasForeignKey(d => d.IdRegistroVinculado)

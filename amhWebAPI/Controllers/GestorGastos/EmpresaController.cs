@@ -29,7 +29,7 @@ namespace amhWebAPI.Controllers.GestorGastos
         {
             var lst = (from tbl in _contexto.Empresa where tbl.Id > 0 select new Empresa() { Id = tbl.Id, Nombre = tbl.Nombre }).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -43,7 +43,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de empresa Id: " + Id + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -58,7 +58,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó una nueva empresa: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -89,7 +89,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.Empresa.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la empresa: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.Empresa.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la empresa: " + Id + ", " + item.Nombre);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

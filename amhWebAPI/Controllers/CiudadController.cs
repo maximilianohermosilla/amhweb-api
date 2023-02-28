@@ -47,7 +47,7 @@ namespace amhWebAPI.Controllers
                 }
             }
 
-            return Accepted(ciudadesDTO);
+            return Ok(ciudadesDTO);
         }
 
         [HttpGet("buscarPais/{PaisId}")]
@@ -72,7 +72,7 @@ namespace amhWebAPI.Controllers
                 }
             }
             
-            return Accepted(ciudadesDTO);
+            return Ok(ciudadesDTO);
         }
 
         [HttpGet("buscar/{CiudadId}")]
@@ -93,7 +93,7 @@ namespace amhWebAPI.Controllers
             }
 
             _logger.LogWarning("Búsqueda de Marca Id: " + CiudadId + ". Resultados: " + ciudadDTO.Nombre + ", " + _pais.Nombre);
-            return Accepted(ciudadDTO);
+            return Ok(ciudadDTO);
         }
 
         [HttpPost("nuevo")]
@@ -108,7 +108,7 @@ namespace amhWebAPI.Controllers
             nuevo.Id = _ciudad.Id;
 
             _logger.LogWarning("Se insertó una nueva ciudad: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-            return Accepted(nuevo);
+            return Ok(nuevo);
         }
 
         [HttpPut("actualizar")]
@@ -129,7 +129,7 @@ namespace amhWebAPI.Controllers
             _contexto.Ciudad.Update(_ciudad);
             _contexto.SaveChanges();
             _logger.LogWarning("Se actualizó la ciudad: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-            return Accepted(actualiza);
+            return Ok(actualiza);
         }
         [HttpDelete("eliminar/{CiudadId}")]
         [Authorize(Roles = "Administrador")]
@@ -151,7 +151,7 @@ namespace amhWebAPI.Controllers
             _contexto.Ciudad.Remove(_ciudad);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la ciudad: " + CiudadId + ", " + _ciudad.Nombre);
-            return Accepted(CiudadId);
+            return Ok(CiudadId);
         }
     }
 }

@@ -96,7 +96,7 @@ namespace MayiBeerCollection.Controllers
             }
 
             _logger.LogWarning("Búsqueda de País Id: " + PaisId + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -122,7 +122,7 @@ namespace MayiBeerCollection.Controllers
                 nuevoPais.Id = _pais.Id;
 
                 _logger.LogWarning("Se insertó un nuevo país: " + nuevoPais.Id + ". Nombre: " + nuevoPais.Nombre);
-                return Accepted(nuevoPais);
+                return Ok(nuevoPais);
             }
             catch (Exception ex)
             {
@@ -170,7 +170,7 @@ namespace MayiBeerCollection.Controllers
                 _contexto.Pais.Update(_pais);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó el país: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -207,7 +207,7 @@ namespace MayiBeerCollection.Controllers
             _contexto.Pais.Remove(_pais);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el país: " + PaisId + ", " + _pais.Nombre);
-            return Accepted(PaisId);
+            return Ok(PaisId);
         }
     }
 }

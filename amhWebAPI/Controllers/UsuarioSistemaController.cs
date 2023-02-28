@@ -32,7 +32,7 @@ namespace amhWebAPI.Controllers
         {
             var lst = (from tbl in _contexto.Sistema where tbl.Id > 0 select new Acto() { Id = tbl.Id, Nombre = tbl.Descripcion }).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -69,7 +69,7 @@ namespace amhWebAPI.Controllers
            
 
             _logger.LogWarning("Búsqueda de sistema Id: " + IdSistema + ". Resultados: " + item.Descripcion);
-            return Accepted(sistemaDTO);
+            return Ok(sistemaDTO);
         }
 
         [HttpGet("buscarUsuario/{IdUsuario}")]
@@ -105,7 +105,7 @@ namespace amhWebAPI.Controllers
 
 
             _logger.LogWarning("Búsqueda de usuario Id: " + IdUsuario + ". Resultados: " + usuarioDTO.Nombre);
-            return Accepted(usuarioDTO);
+            return Ok(usuarioDTO);
         }
 
         [HttpPost("nuevo")]
@@ -122,7 +122,7 @@ namespace amhWebAPI.Controllers
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó una nueva relación de usuario: " + nuevo.IdUsuario + " y sistema: " + nuevo.IdSistema);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace amhWebAPI.Controllers
             _contexto.UsuarioSistema.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la relación del usuario: " + eliminar.IdUsuario + " y el sistema " + eliminar.IdSistema);
-            return Accepted(eliminar);
+            return Ok(eliminar);
         }
 
     }

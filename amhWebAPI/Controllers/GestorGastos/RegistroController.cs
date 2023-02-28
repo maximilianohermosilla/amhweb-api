@@ -62,7 +62,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 }
             }
 
-            return Accepted(lst);
+            return Ok(listaDTO);
         }
 
 
@@ -107,7 +107,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             }
 
             _logger.LogWarning("Búsqueda de registro Id: " + Id + ". Resultados: " + item.Descripcion);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -123,7 +123,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó un nuevo registro: " + nuevo.Id + ". Descripcion: " + nuevo.Descripcion);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ namespace amhWebAPI.Controllers.GestorGastos
                 _contexto.Registro.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó el registro: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Descripcion);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -186,7 +186,7 @@ namespace amhWebAPI.Controllers.GestorGastos
             _contexto.Registro.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el registro: " + Id + ", " + item.Descripcion);
-            return Accepted(Id);
+            return Ok(Id);
         }
 
     }

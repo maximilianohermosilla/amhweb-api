@@ -46,7 +46,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 }
             }
 
-            return Accepted(estilosDTO);
+            return Ok(estilosDTO);
         }
 
         [HttpGet("listarProxy/")]
@@ -56,7 +56,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
 
             List<EstiloDTO> estilosDTO = _mapper.Map<List<EstiloDTO>>(lst);
 
-            return Accepted(estilosDTO);
+            return Ok(estilosDTO);
         }
 
         [HttpGet("buscar/{EstiloId}")]
@@ -78,7 +78,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 item.Imagen = stringArchivo;
             }
             _logger.LogWarning("Búsqueda de Estilo Id: " + EstiloId + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -104,7 +104,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 nuevo.Id = _estilo.Id;
 
                 _logger.LogWarning("Se insertó un nuevo estilo: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -154,7 +154,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 _contexto.SaveChanges();
 
                 _logger.LogWarning("Se actualizó el estilo: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
 
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
             _contexto.Estilo.Remove(_estilo);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el estilo: " + EstiloId + ", " + _estilo.Nombre);
-            return Accepted(EstiloId);
+            return Ok(EstiloId);
         }
     }
 }

@@ -29,7 +29,7 @@ public partial class Registro
 
     public virtual Cuenta IdCuentaNavigation { get; set; } = null!;
 
-    public virtual Empresa IdNavigation { get; set; } = null!;
+    public virtual Empresa? IdEmpresaNavigation { get; set; }
 
     public virtual RegistroVinculado? IdRegistroVinculadoNavigation { get; set; }
 

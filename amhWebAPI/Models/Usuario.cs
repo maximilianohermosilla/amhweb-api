@@ -19,7 +19,7 @@ public partial class Usuario
 
     public int? IdPerfil { get; set; }
 
-    public virtual Cuenta? Cuenta { get; set; }
+    public virtual ICollection<Cuenta> Cuenta { get; } = new List<Cuenta>();
 
     public virtual Perfil? IdPerfilNavigation { get; set; }
 

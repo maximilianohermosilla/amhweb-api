@@ -48,7 +48,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 }
             }
 
-            return Accepted(marcasDTO);
+            return Ok(marcasDTO);
         }
 
         [HttpGet("listarProxy/")]
@@ -60,7 +60,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
             List<MarcaDTO> marcasDTO = _mapper.Map<List<MarcaDTO>>(lst);
 
 
-            return Accepted(marcasDTO);
+            return Ok(marcasDTO);
         }
 
         [HttpGet("buscar/{MarcaId}")]
@@ -82,7 +82,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 item.Imagen = stringArchivo;
             }
             _logger.LogWarning("Búsqueda de Marca Id: " + MarcaId + ". Resultados: " + item.Nombre);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -108,7 +108,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 nuevo.Id = _marca.Id;
 
                 _logger.LogWarning("Se insertó una nueva marca: " + nuevo.Id + ". Nombre: " + nuevo.Nombre);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -158,7 +158,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
                 _contexto.Marca.Update(_marca);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó la marca: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Nombre);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -195,7 +195,7 @@ namespace amhWebAPI.Controllers.MayiBeerCollection
             _contexto.Marca.Remove(_marca);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó la marca: " + MarcaId + ", " + _marca.Nombre);
-            return Accepted(MarcaId);
+            return Ok(MarcaId);
         }
     }
 }

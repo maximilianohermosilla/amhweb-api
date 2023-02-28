@@ -30,7 +30,7 @@ namespace amhWebAPI.Controllers
         {
             var lst = (from tbl in _contexto.Sistema where tbl.Id > 0 select new Sistema() { Id = tbl.Id, Descripcion = tbl.Descripcion }).ToList();
 
-            return Accepted(lst);
+            return Ok(lst);
         }
 
 
@@ -44,7 +44,7 @@ namespace amhWebAPI.Controllers
             }
 
             _logger.LogWarning("Búsqueda de sistema Id: " + IdSistema + ". Resultados: " + item.Descripcion);
-            return Accepted(item);
+            return Ok(item);
         }
 
         [HttpPost("nuevo")]
@@ -59,7 +59,7 @@ namespace amhWebAPI.Controllers
                 nuevo.Id = nuevo.Id;
 
                 _logger.LogWarning("Se insertó un nuevo sistema: " + nuevo.Id + ". Nombre: " + nuevo.Descripcion);
-                return Accepted(nuevo);
+                return Ok(nuevo);
 
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace amhWebAPI.Controllers
                 _contexto.Sistema.Update(item);
                 _contexto.SaveChanges();
                 _logger.LogWarning("Se actualizó el sistema: " + actualiza.Id + ". Nombre anterior: " + oldName + ". Nombre actual: " + actualiza.Descripcion);
-                return Accepted(actualiza);
+                return Ok(actualiza);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace amhWebAPI.Controllers
             _contexto.Sistema.Remove(item);
             _contexto.SaveChanges();
             _logger.LogWarning("Se eliminó el sistema: " + IdSistema + ", " + item.Descripcion);
-            return Accepted(IdSistema);
+            return Ok(IdSistema);
         }
 
     }
